@@ -47,7 +47,11 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
       initial="hidden"
       animate={shown ? 'show' : 'hidden'}
       transition={{ delay }}
-      style={{ willChange: 'transform, opacity' }}
+      style={{
+        willChange: 'transform, opacity',
+        transform: 'translateZ(0)',
+        backfaceVisibility: 'hidden',
+      }}
     >
       {children}
     </motion.div>
