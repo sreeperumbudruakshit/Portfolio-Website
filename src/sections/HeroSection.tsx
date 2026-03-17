@@ -5,7 +5,7 @@ import { stagger } from '../lib/motion'
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative pt-28 md:pt-32">
+    <section id="home" className="relative pt-36 md:pt-32">
       <div className="mx-auto w-full max-w-6xl px-5 md:px-6">
         <div className="grid items-start gap-10 md:grid-cols-[1.15fr_0.85fr] md:gap-12">
           <motion.div variants={stagger} initial="hidden" animate="show" className="flex flex-col gap-6">
