@@ -17,21 +17,6 @@ const floaters = [
 
 export default function Background() {
   const reduceMotion = useReducedMotion()
-  const [scrolling, setScrolling] = React.useState(false)
-
-  React.useEffect(() => {
-    let t = 0
-    const onScroll = () => {
-      setScrolling(true)
-      window.clearTimeout(t)
-      t = window.setTimeout(() => setScrolling(false), 140)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.clearTimeout(t)
-    }
-  }, [])
 
   React.useEffect(() => {
     const root = document.documentElement
@@ -84,7 +69,7 @@ export default function Background() {
           key={className}
           className={`absolute hidden md:block ${className}`}
           style={{
-            opacity: reduceMotion || scrolling ? 0.12 : 0.18,
+            opacity: reduceMotion ? 0.12 : 0.16,
             transform: `translateZ(0) scale(${scale})`,
           }}
         >
