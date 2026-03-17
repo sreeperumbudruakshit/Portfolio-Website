@@ -15,6 +15,7 @@ const nav = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = React.useState(false)
+  const [hiddenOnMobile, setHiddenOnMobile] = React.useState(false)
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 18)
@@ -23,11 +24,57 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  React.useEffect(() => {
+    // Hide navbar on mobile when scrolling down, show when scrolling up.
+    const isMobile = () => window.matchMedia('(max-width: 767px)').matches
+    let lastY = window.scrollY
+    let ticking = false
+
+    const update = () => {
+      ticking = false
+      if (!isMobile()) {
+        setHiddenOnMobile(false)
+        lastY = window.scrollY
+        return
+      }
+
+      const y = window.scrollY
+      const delta = y - lastY
+      const nearTop = y < 24
+
+      if (nearTop) {
+        setHiddenOnMobile(false)
+      } else if (delta > 8) {
+        setHiddenOnMobile(true)
+      } else if (delta < -6) {
+        setHiddenOnMobile(false)
+      }
+
+      lastY = y
+    }
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        window.requestAnimationFrame(update)
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    update()
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [])
+
   return (
     <motion.div
       initial={{ y: -10, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      animate={{ y: hiddenOnMobile ? -96 : 0, opacity: hiddenOnMobile ? 0 : 1 }}
+      transition={{ duration: 0.28, ease: 'easeOut' }}
       className={cn(
         'pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4',
       )}
