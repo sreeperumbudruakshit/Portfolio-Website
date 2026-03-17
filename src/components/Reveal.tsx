@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import React from 'react'
 import { fadeUp } from '../lib/motion'
 
 type Props = {
@@ -8,6 +9,20 @@ type Props = {
 }
 
 export default function Reveal({ children, className, delay = 0 }: Props) {
+  const [isMobile, setIsMobile] = React.useState(false)
+
+  React.useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const apply = () => setIsMobile(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
+  // Mobile browsers change viewport height while scrolling (address bar),
+  // which can make reveal animations feel like "double loading".
+  if (isMobile) return <div className={className}>{children}</div>
+
   return (
     <motion.div
       className={className}
