@@ -49,9 +49,10 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
   }, [shown])
 
   // Mobile: slide-only reveal (opacity stays 1) to avoid "double loading" feel.
+  const smoothEase: [number, number, number, number] = [0.16, 1, 0.3, 1]
   const mobileVariants: Variants = {
-    hidden: { opacity: 1, y: 18 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.52, ease: [0.22, 1, 0.36, 1] } },
+    hidden: { opacity: 1, y: 14 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.62, ease: smoothEase } },
   }
 
   const variants: Variants = isMobile ? mobileVariants : fadeUp
@@ -65,7 +66,7 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
       animate={shown ? 'show' : 'hidden'}
       transition={{ delay }}
       style={{
-        willChange: 'transform, opacity',
+        willChange: isMobile ? 'transform' : 'transform, opacity',
         transform: 'translateZ(0)',
         backfaceVisibility: 'hidden',
       }}
