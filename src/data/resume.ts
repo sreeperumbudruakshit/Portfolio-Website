@@ -89,6 +89,7 @@ export const resume: ResumeData = {
       'Strong interest in building responsive, animation-rich UIs.',
       'Hands-on with DSA practice and coding platforms.',
       'Curious about data workflows: cleaning, pipelines, analytics, and ML.',
+      'Hackathon experience with teamwork, ownership, and clear communication.',
     ],
     education: [
       {
@@ -191,6 +192,7 @@ export const resume: ResumeData = {
   achievements: [
     'Published in IEEE at the 5th International Conference on Soft Computing for Security Applications.',
     'Participated in PROMETHEAN 2025 Hackathon and HACKFINITI 2025 National-Level Hackathon.',
+    'Comfortable taking ownership in teams: brainstorming, mentoring peers, and coordinating rapid prototyping.',
   ],
 
   codingProfiles: [

@@ -28,6 +28,10 @@ export default function ContactSection() {
       subtitle="Use the form to send a quick email, or reach out via LinkedIn and GitHub."
       className="py-16 md:py-20"
     >
+      <p className="mx-auto mb-6 max-w-6xl px-5 text-sm leading-relaxed text-white/65 md:px-6 md:text-base">
+        I’m actively looking for software internships and collaboration opportunities. If you’re building something and need
+        a motivated developer who can learn fast, communicate clearly, and take ownership, I’d love to connect.
+      </p>
       <div className="grid gap-6 md:grid-cols-[0.95fr_1.05fr]">
         <Reveal className="card">
           <div className="text-sm font-semibold text-white">Direct links</div>
