@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
 import React from 'react'
 import {
   SiReact,
@@ -78,27 +78,18 @@ export default function Background() {
 
       <div className="absolute inset-0 opacity-[0.05] bg-grain" />
 
-      {floaters.map(({ Icon, className, scale, delay }) => (
-        <motion.div
+      {/* Keep icons static for maximum scroll smoothness */}
+      {floaters.map(({ Icon, className, scale }) => (
+        <div
           key={className}
           className={`absolute hidden md:block ${className}`}
-          initial={{ opacity: 0.12, y: 0, scale, rotate: 0 }}
-          animate={
-            reduceMotion || scrolling
-              ? { opacity: 0.18, y: 0, scale, rotate: 0 }
-              : { opacity: 0.62, y: -12, scale: scale * 1.02, rotate: 2 }
-          }
-          transition={{
-            duration: 10 + delay * 2.5,
-            repeat: reduceMotion || scrolling ? 0 : Infinity,
-            ease: 'easeInOut',
-            delay,
-            repeatType: 'mirror',
+          style={{
+            opacity: reduceMotion || scrolling ? 0.12 : 0.18,
+            transform: `translateZ(0) scale(${scale})`,
           }}
-          style={{ willChange: 'transform, opacity', transform: 'translateZ(0)' }}
         >
-          <Icon className="h-10 w-10 drop-shadow-[0_0_24px_rgba(139,92,246,0.22)]" />
-        </motion.div>
+          <Icon className="h-10 w-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.18)]" />
+        </div>
       ))}
     </div>
   )

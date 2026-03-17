@@ -26,8 +26,9 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
   // so on mobile we avoid opacity fades (which feel like "loading").
   const easeOutBezier: [number, number, number, number] = [0.22, 1, 0.36, 1]
   const mobileVariants: Variants = {
-    hidden: { opacity: 1, y: 10 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeOutBezier } },
+    // Keep opacity near-1 (not 0) to avoid a "loading" flash on mobile.
+    hidden: { opacity: 0.92, y: 14 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.34, ease: easeOutBezier } },
   }
 
   const variants: Variants = isMobile ? mobileVariants : fadeUp
@@ -38,7 +39,7 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
       variants={variants}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.28, margin: '0px 0px -14% 0px' }}
+      viewport={{ once: true, amount: isMobile ? 0.24 : 0.28, margin: '0px 0px -14% 0px' }}
       transition={{ delay }}
       style={{ willChange: isMobile ? 'transform' : 'transform, opacity' }}
     >
