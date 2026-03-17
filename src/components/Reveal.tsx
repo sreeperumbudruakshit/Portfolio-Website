@@ -39,20 +39,21 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
       },
       {
         root: null,
-        rootMargin: '0px 0px -12% 0px',
-        threshold: 0.28,
+        // Mobile: trigger earlier so animation finishes before user "hits" the section.
+        rootMargin: isMobile ? '0px 0px -22% 0px' : '0px 0px -12% 0px',
+        threshold: isMobile ? 0.12 : 0.28,
       },
     )
 
     obs.observe(el)
     return () => obs.disconnect()
-  }, [shown])
+  }, [shown, isMobile])
 
   // Mobile: slide-only reveal (opacity stays 1) to avoid "double loading" feel.
   const smoothEase: [number, number, number, number] = [0.16, 1, 0.3, 1]
   const mobileVariants: Variants = {
-    hidden: { opacity: 1, y: 14 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.62, ease: smoothEase } },
+    hidden: { opacity: 1, y: 10 },
+    show: { opacity: 1, y: 0, transition: { type: 'tween', duration: 0.5, ease: smoothEase } },
   }
 
   const variants: Variants = isMobile ? mobileVariants : fadeUp
