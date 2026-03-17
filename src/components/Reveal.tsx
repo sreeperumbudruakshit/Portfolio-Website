@@ -10,12 +10,14 @@ type Props = {
 }
 
 export default function Reveal({ children, className, delay = 0 }: Props) {
-  const [isMobile, setIsMobile] = React.useState(false)
+  const [isMobile, setIsMobile] = React.useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(max-width: 767px)').matches
+  })
 
   React.useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
     const apply = () => setIsMobile(mq.matches)
-    apply()
     mq.addEventListener('change', apply)
     return () => mq.removeEventListener('change', apply)
   }, [])
