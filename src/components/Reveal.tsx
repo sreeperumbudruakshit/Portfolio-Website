@@ -1,4 +1,4 @@
-import { motion, useInView } from 'framer-motion'
+import { motion } from 'framer-motion'
 import type { Variants } from 'framer-motion'
 import React from 'react'
 import { fadeUp } from '../lib/motion'
@@ -11,34 +11,33 @@ type Props = {
 
 export default function Reveal({ children, className, delay = 0 }: Props) {
   const ref = React.useRef<HTMLDivElement | null>(null)
-  const [isMobile, setIsMobile] = React.useState(() => {
-    if (typeof window === 'undefined') return false
-    return window.matchMedia('(max-width: 767px)').matches
-  })
+  const [shown, setShown] = React.useState(false)
 
+  // Reveal once, then disconnect observer (prevents mobile "double loading").
   React.useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)')
-    const apply = () => setIsMobile(mq.matches)
-    mq.addEventListener('change', apply)
-    return () => mq.removeEventListener('change', apply)
-  }, [])
+    const el = ref.current
+    if (!el || shown) return
 
-  // Use a "reveal once and never revert" strategy.
-  // This avoids mobile viewport/address-bar changes causing re-animations.
-  const inView = useInView(ref, {
-    once: true,
-    amount: isMobile ? 0.28 : 0.28,
-    margin: '0px 0px -12% 0px',
-  })
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (entry?.isIntersecting) {
+          setShown(true)
+          obs.disconnect()
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -12% 0px',
+        threshold: 0.28,
+      },
+    )
 
-  const easeOutBezier: [number, number, number, number] = [0.22, 1, 0.36, 1]
-  const mobileVariants: Variants = {
-    // Match desktop feel: same distance, duration, and easing.
-    hidden: { opacity: 0, y: 12 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.52, ease: easeOutBezier } },
-  }
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [shown])
 
-  const variants: Variants = isMobile ? mobileVariants : fadeUp
+  const variants: Variants = fadeUp
 
   return (
     <motion.div
@@ -46,7 +45,7 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
       className={className}
       variants={variants}
       initial="hidden"
-      animate={inView ? 'show' : 'hidden'}
+      animate={shown ? 'show' : 'hidden'}
       transition={{ delay }}
       style={{ willChange: 'transform, opacity' }}
     >
