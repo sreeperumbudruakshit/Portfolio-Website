@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-950 text-white/80 antialiased;
+    font-feature-settings: 'ss01' 1, 'ss02' 1, 'cv01' 1, 'cv02' 1;
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.35);
+  }
+}
+
+@layer components {
+  .glass {
+    @apply border border-white/10 bg-white/[0.06];
+  }
+
+  .glass-strong {
+    @apply border border-white/10 bg-white/[0.08];
+  }
+
+  .ring-glow {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 0 0 1px rgba(139, 92, 246, 0.14) inset,
+      0 0 24px rgba(139, 92, 246, 0.18),
+      0 0 54px rgba(34, 211, 238, 0.12);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+  }
+
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-violet-500/90 via-fuchsia-500/80 to-cyan-400/80 text-white shadow-glow
+      hover:brightness-110 active:brightness-95;
+    background-size: 160% 160%;
+    animation: shimmer 10s ease-in-out infinite alternate;
+  }
+
+  .btn-ghost {
+    @apply btn glass hover:bg-white/[0.10];
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-white/75;
+  }
+
+  .section-title {
+    @apply text-sm font-semibold tracking-[0.22em] text-white/70;
+  }
+
+  .h2 {
+    @apply text-3xl font-semibold tracking-tight text-white md:text-4xl;
+  }
+
+  .p-muted {
+    @apply text-white/65;
+  }
+
+  .card {
+    @apply glass relative overflow-hidden rounded-2xl p-5 transition md:p-6;
+  }
+
+  .card:hover {
+    @apply -translate-y-0.5;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: radial-gradient(
+      800px circle at var(--mx, 50%) var(--my, 20%),
+      rgba(139, 92, 246, 0.22),
+      transparent 55%
+    );
+    opacity: 0;
+    transition: opacity 240ms ease;
+    pointer-events: none;
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-violet-200 via-fuchsia-200 to-cyan-200 bg-clip-text text-transparent;
+  }
+
+  .mask-fade-y {
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+  }
+}
+
