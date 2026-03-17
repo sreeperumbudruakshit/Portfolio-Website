@@ -12,6 +12,17 @@ type Props = {
 export default function Reveal({ children, className, delay = 0 }: Props) {
   const ref = React.useRef<HTMLDivElement | null>(null)
   const [shown, setShown] = React.useState(false)
+  const [isMobile, setIsMobile] = React.useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(max-width: 767px)').matches
+  })
+
+  React.useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const onChange = () => setIsMobile(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   // Reveal once, then disconnect observer (prevents mobile "double loading").
   React.useEffect(() => {
@@ -37,8 +48,13 @@ export default function Reveal({ children, className, delay = 0 }: Props) {
     return () => obs.disconnect()
   }, [shown])
 
-  // Same reveal behavior on mobile + desktop.
-  const variants: Variants = fadeUp
+  // Mobile: slide-only reveal (opacity stays 1) to avoid "double loading" feel.
+  const mobileVariants: Variants = {
+    hidden: { opacity: 1, y: 18 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.52, ease: [0.22, 1, 0.36, 1] } },
+  }
+
+  const variants: Variants = isMobile ? mobileVariants : fadeUp
 
   return (
     <motion.div
