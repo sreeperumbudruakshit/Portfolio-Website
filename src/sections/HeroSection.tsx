@@ -87,8 +87,8 @@ export default function HeroSection() {
               <div className="mt-4 grid gap-3">
                 {[
                   {
-                    k: 'UI Engineering',
-                    v: 'Premium interfaces with motion + polish',
+                    k: 'Data Engineering',
+                    v: 'Data cleaning, pipelines, and reliable data flow',
                   },
                   {
                     k: 'Problem Solving',
