@@ -70,7 +70,7 @@ export const resume: ResumeData = {
     phone: '+91 8297936975',
     resumeDownload: {
       label: 'Download Resume',
-      href: '/resume.pdf',
+      href: '/Akshit_Resume.pdf',
     } satisfies Link,
   },
 
