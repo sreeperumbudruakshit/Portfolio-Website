@@ -1,4 +1,4 @@
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
+import { FiGithub, FiLinkedin, FiMail, FiPhone } from 'react-icons/fi'
 import { resume } from '../data/resume'
 
 export default function Footer() {
@@ -39,6 +39,15 @@ export default function Footer() {
               >
                 <FiMail />
               </a>
+              {resume.basics.phone && (
+                <a
+                  className="glass inline-flex h-10 w-10 items-center justify-center rounded-xl text-white/70 transition hover:bg-white/[0.10] hover:text-white"
+                  href={`tel:${resume.basics.phone.replace(/\s+/g, '')}`}
+                  aria-label="Phone"
+                >
+                  <FiPhone />
+                </a>
+              )}
             </div>
           </div>
 

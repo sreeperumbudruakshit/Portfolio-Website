@@ -34,6 +34,7 @@ export type ResumeData = {
     location?: string
     shortIntro: string
     email: string
+    phone?: string
     resumeDownload: Link
   }
   links: {
@@ -66,6 +67,7 @@ export const resume: ResumeData = {
     shortIntro:
       'I build AI projects with a product mindset—clear goals, strong results, and clean delivery. Currently focusing on Data Science, Data Engineering, and applied AI/ML projects.',
     email: 'sreeperumbuduru.akshit@gmail.com',
+    phone: '+91 8297936975',
     resumeDownload: {
       label: 'Download Resume',
       href: '/resume.pdf',

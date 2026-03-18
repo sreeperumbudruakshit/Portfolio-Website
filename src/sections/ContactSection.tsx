@@ -2,7 +2,7 @@ import React from 'react'
 import Reveal from '../components/Reveal'
 import Section from '../components/Section'
 import { resume } from '../data/resume'
-import { FiArrowUpRight, FiGithub, FiLinkedin, FiMail, FiSend } from 'react-icons/fi'
+import { FiArrowUpRight, FiGithub, FiLinkedin, FiMail, FiPhone, FiSend } from 'react-icons/fi'
 
 export default function ContactSection() {
   const [name, setName] = React.useState('')
@@ -89,6 +89,24 @@ export default function ContactSection() {
                 <FiArrowUpRight className="text-white/55" />
               </div>
             </a>
+
+            {resume.basics.phone && (
+              <a
+                className="glass rounded-2xl p-4 transition hover:bg-white/[0.10]"
+                href={`tel:${resume.basics.phone.replace(/\s+/g, '')}`}
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <FiPhone className="text-emerald-200/80" />
+                    <div>
+                      <div className="text-sm font-semibold text-white">Phone</div>
+                      <div className="text-xs text-white/55">{resume.basics.phone}</div>
+                    </div>
+                  </div>
+                  <FiArrowUpRight className="text-white/55" />
+                </div>
+              </a>
+            )}
           </div>
         </Reveal>
 
