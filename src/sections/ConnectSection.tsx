@@ -9,7 +9,7 @@ const socials = [
   { label: 'GitHub', href: resume.links.github, Icon: FiGithub },
   ...(resume.links.instagram
     ? [{ label: 'Instagram', href: resume.links.instagram, Icon: SiInstagram }]
-    : []),
+    : []),  
   {
     label: 'Email',
     href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(resume.basics.email)}`,
